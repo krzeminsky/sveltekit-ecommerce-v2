@@ -67,7 +67,9 @@
 	<div
 		id="options"
 		class="
-        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all {active ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-0 invisible'}
+        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all {active
+			? 'opacity-100 scale-100 visible'
+			: 'opacity-0 scale-0 invisible'}
     "
 		role="listbox"
 		aria-label={label}
