@@ -19,6 +19,8 @@ class SimpleNameCache {
         this.deleteStmnt = db.prepare(`DELETE FROM ${tableName} WHERE id = ?`);
         this.updateStmnt = db.prepare(`UPDATE ${tableName} SET name = ? WHERE id = ?`);
         this.allStmnt = db.prepare(`SELECT * FROM ${tableName}`);
+
+        this.refresh();
     }
 
     add(value: string) {

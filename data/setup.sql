@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS stock;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS product_variant;
 DROP TABLE IF EXISTS staff_member;
+DROP TABLE IF EXISTS product_update_request;
 
 CREATE TABLE category(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -51,8 +52,20 @@ CREATE TABLE product_variant(
 );
 
 CREATE TABLE staff_member(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    ip TEXT NOT NULL,
+    ip TEXT NOT NULL PRIMARY KEY,
     level INTEGER NOT NULL,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+INSERT INTO staff_member VALUES('::1', 3, 'Head admin', 'xyz');
+
+CREATE TABLE product_update_request(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    author_ip TEXT NOT NULL,
+    product_id INTEGER NOT NULL,
+    data TEXT NOT NULL,
+
+    FOREIGN KEY (author_ip) REFERENCES staff_member(ip),
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );
