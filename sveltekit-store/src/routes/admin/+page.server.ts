@@ -1,5 +1,9 @@
-import { authorizeStaff } from '$lib/server/database/staff-members.js';
-import { fail, redirect } from '@sveltejs/kit';
+import { authorizeStaff, isStaffMember } from '$lib/server/database/staff-members.js';
+import { error, fail, redirect } from '@sveltejs/kit';
+
+export const load = async ({ getClientAddress }) => {
+    if (!isStaffMember(getClientAddress())) throw error(404);
+}
 
 export const actions = {
     default: async ({ request, cookies, getClientAddress }) => {
