@@ -1,8 +1,15 @@
+<script lang="ts" context="module">
+	let activeDropdown = writable(-1);
+	let dropdownCount = 0;
+</script>
+
 <script lang="ts">
 	import Check from "$lib/assets/icons/check.svg";
 	import { focusTrap } from "$lib/utils/focus-trap";
+	import { writable } from "svelte/store";
 
 	export let label: string;
+	export let width: string|undefined = undefined;
 	export let options: string[];
 	export let multiple = false;
 	export let selected: string | string[] = multiple ? [] : options[0];
@@ -10,12 +17,14 @@
 	$: selectedText = !multiple
 		? selected
 		: selected.length == 0
-			? "None"
+			? 'Any'
 			: selected.length == 1
 				? selected[0]
 				: "...";
 
-	let active = false;
+	let dropdownId = dropdownCount++;
+
+	$: show = $activeDropdown == dropdownId;
 
 	function onOptionClick(index: number, isSelected: boolean) {
 		if (multiple) {
@@ -25,7 +34,7 @@
 			else arr.push(options[index]);
 		} else {
 			selected = options[index];
-			active = false;
+			activeDropdown.set(-1);
 		}
 
 		selected = selected;
@@ -34,9 +43,9 @@
 
 <svelte:window
 	on:keydown={(e) => {
-		if (e.key == "Escape") active = false;
+		if (e.key == "Escape") activeDropdown.set(-1);
 	}}
-	on:click={() => (active = false)}
+	on:click={() => activeDropdown.set(-1)}
 />
 
 <div
@@ -44,14 +53,14 @@
 	role="combobox"
 	aria-controls="options"
 	aria-haspopup="listbox"
-	aria-expanded={active}
+	aria-expanded={show}
 	aria-label={label}
 >
 	<button
-		class="bg-white rounded-full shadow-md text-left"
+		class="bg-white rounded-full shadow-md hover:shadow-lg active:shadow-lg text-left transition-all"
 		aria-haspopup="listbox"
-		aria-expanded={active}
-		on:click|stopPropagation={() => (active = !active)}
+		aria-expanded={show}
+		on:click|stopPropagation={() => activeDropdown.set(dropdownId) }
 	>
 		<h1
 			class="inline-block bg-indigo-500 rounded-full px-4 py-2.5 text-white align-middle"
@@ -60,6 +69,7 @@
 		</h1>
 		<span
 			class="inline-block pl-4 pr-8 w-24 text-nowrap whitespace-nowrap overflow-ellipsis overflow-hidden align-middle text-center"
+			style="width: {width}"
 			aria-live="polite">{selectedText}</span
 		>
 	</button>
@@ -67,7 +77,7 @@
 	<div
 		id="options"
 		class="
-        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all {active
+        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all {show
 			? 'opacity-100 scale-100 visible'
 			: 'opacity-0 scale-0 invisible'}
     "

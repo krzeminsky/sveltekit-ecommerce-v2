@@ -1,4 +1,3 @@
-/* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,5 +15,9 @@
 
     *::-webkit-scrollbar-thumb {
         @apply bg-gray-300 rounded-full;
+    }
+
+    .text-button {
+        @apply px-4 h-fit py-2.5 text-nowrap text-white bg-indigo-500 shadow-md hover:shadow-lg active:shadow-lg transition-all rounded-full;
     }
 }

@@ -8,6 +8,7 @@
         <div class="w-52 h-full grid content-start shadow-lg rounded-lg overflow-hidden flex-shrink-0">
             <ReactiveLink href="/admin/dashboard">Dashboard</ReactiveLink>
             <ReactiveLink href="/admin/staff">Staff</ReactiveLink>
+            <ReactiveLink href="/admin/filteringData">Filtering data</ReactiveLink>
             <ReactiveLink href="/admin/updateRequests">Update requests</ReactiveLink>
             <ReactiveLink href="/admin/products">Products</ReactiveLink>
         </div>

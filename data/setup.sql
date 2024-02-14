@@ -65,6 +65,7 @@ CREATE TABLE product_update_request(
     author_ip TEXT NOT NULL,
     product_id INTEGER NOT NULL,
     data TEXT NOT NULL,
+    status INTEGER NOT NULL,
 
     FOREIGN KEY (author_ip) REFERENCES staff_member(ip),
     FOREIGN KEY (product_id) REFERENCES product(id)
