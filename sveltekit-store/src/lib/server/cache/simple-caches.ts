@@ -47,6 +47,10 @@ class SimpleNameCache {
         return this.cache.values();
     }
 
+    valuesArray() {
+        return Array.from(this.values());
+    }
+
     entries() {
         return this.cache.entries();
     }
@@ -57,6 +61,7 @@ class SimpleNameCache {
     }
 }
 
-export const category = new SimpleNameCache("category");
+export const categoryCache = new SimpleNameCache("category");
 export const colorCache = new SimpleNameCache("color");
 export const sizeCache = new SimpleNameCache("size");
+export const materialCache = new SimpleNameCache("material");

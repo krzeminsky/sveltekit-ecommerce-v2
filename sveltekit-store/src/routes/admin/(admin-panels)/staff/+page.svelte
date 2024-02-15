@@ -3,7 +3,7 @@
     import SearchBar from "$lib/components/filtering-tools/search-bar.svelte";
 	import SortBy from "$lib/components/filtering-tools/sort-by.svelte";
 	import type { StaffMember } from "$lib/types";
-	import Placeholder from "$lib/components/placeholder.svelte";
+	import Placeholder from "$lib/components/placeholders/placeholder.svelte";
 
     let staffMembers: StaffMember[] = [];
 </script>

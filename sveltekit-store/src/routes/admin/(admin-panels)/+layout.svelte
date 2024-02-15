@@ -13,7 +13,7 @@
             <ReactiveLink href="/admin/products">Products</ReactiveLink>
         </div>
         
-        <div class="flex-1 basis-0 relative p-4">
+        <div class="flex-1 basis-0 relative p-4 overflow-y-auto">
             <slot />
         </div>
     </div>

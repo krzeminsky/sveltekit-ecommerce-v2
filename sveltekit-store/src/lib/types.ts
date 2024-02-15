@@ -16,7 +16,7 @@ export type ProductUpdateRequest = {
 export type Product = {
     id: number;
     name: string;
-    category_id: number;
+    category: string;
     materials?: string;
     description?: string;
 }
@@ -24,9 +24,15 @@ export type Product = {
 export type ProductVariant = {
     id: number;
     product_id: number;
-    color_id: number;
+    color: string;
     stock_id: number;
     gallery_map: string;
+}
+
+export type ProductStock = {
+    id: number;
+    size: string;
+    amount: number;
 }
 
 export type ProductRecord = {

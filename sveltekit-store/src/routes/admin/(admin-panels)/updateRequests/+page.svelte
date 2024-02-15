@@ -2,7 +2,7 @@
 	import SearchBar from "$lib/components/filtering-tools/search-bar.svelte";
 	import SortBy from "$lib/components/filtering-tools/sort-by.svelte";
     import AdminPanelLayout from "$lib/components/layouts/admin-panel-layout.svelte";
-	import Placeholder from "$lib/components/placeholder.svelte";
+	import Placeholder from "$lib/components/placeholders/placeholder.svelte";
 	import DropdownMenu from "$lib/components/ui/dropdown-menu.svelte";
 	import type { ProductUpdateRequest } from "$lib/types";
 

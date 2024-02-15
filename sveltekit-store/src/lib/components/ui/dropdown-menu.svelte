@@ -12,14 +12,14 @@
 	export let width: string|undefined = undefined;
 	export let options: string[];
 	export let multiple = false;
-	export let selected: string | string[] = multiple ? [] : options[0];
+	export let selected: number | number[] = multiple ? [] : 0;
 
-	$: selectedText = !multiple
-		? selected
+	$: selectedText = typeof selected == "number"
+		? options[selected]
 		: selected.length == 0
 			? 'Any'
 			: selected.length == 1
-				? selected[0]
+				? options[selected[0]]
 				: "...";
 
 	let dropdownId = dropdownCount++;
@@ -28,12 +28,12 @@
 
 	function onOptionClick(index: number, isSelected: boolean) {
 		if (multiple) {
-			const arr = selected as string[];
-
-			if (isSelected) arr.splice(arr.indexOf(options[index]), 1);
-			else arr.push(options[index]);
+			const arr = selected as number[];
+			
+			if (isSelected) arr.splice(arr.indexOf(index), 1);
+			else arr.push(index);
 		} else {
-			selected = options[index];
+			selected = index;
 			activeDropdown.set(-1);
 		}
 
@@ -49,7 +49,7 @@
 />
 
 <div
-	class="relative"
+	class="relative z-10"
 	role="combobox"
 	aria-controls="options"
 	aria-haspopup="listbox"
@@ -60,7 +60,7 @@
 		class="bg-white rounded-full shadow-md hover:shadow-lg active:shadow-lg text-left transition-all"
 		aria-haspopup="listbox"
 		aria-expanded={show}
-		on:click|stopPropagation={() => activeDropdown.set(dropdownId) }
+		on:click|stopPropagation={() => activeDropdown.set($activeDropdown == dropdownId? -1 : dropdownId) }
 	>
 		<h1
 			class="inline-block bg-indigo-500 rounded-full px-4 py-2.5 text-white align-middle"
@@ -74,24 +74,27 @@
 		>
 	</button>
 
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		id="options"
 		class="
-        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all {show
+        absolute top-full left-0 origin-[50%_0px] min-w-full bg-white divide-y-2 divide-gray-100 shadow-md grid rounded-lg mt-2 transition-all max-h-[334px] overflow-y-auto {show
 			? 'opacity-100 scale-100 visible'
 			: 'opacity-0 scale-0 invisible'}
     "
 		role="listbox"
+		tabindex="0"
 		aria-label={label}
 		use:focusTrap
+		on:click|stopPropagation
 	>
 		{#each options as o, i (o)}
 			{@const isSelected =
-				typeof selected === "string"
-					? selected == o
-					: selected.includes(o)}
+				typeof selected === "number"
+					? selected == i
+					: selected.includes(i)}
 			<button
-				class="relative w-full text-left p-2 bg-white hover:bg-gray-100 focus:bg-gray-100 outline-none focus:outline-none transition-all first:rounded-t-lg last:rounded-b-lg"
+				class="relative w-full text-left p-2 bg-white hover:bg-gray-100 focus-visible:bg-gray-100 outline-none focus:outline-none transition-all first:rounded-t-lg last:rounded-b-lg"
 				role="option"
 				aria-selected={isSelected}
 				on:click|stopPropagation={() => onOptionClick(i, isSelected)}
